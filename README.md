@@ -7,4 +7,4 @@ Apply for a API key here: https://developer.forecast.io/register
 
 # Timing
 
-We don't specify a timeframe for the assignment. Just ping is when you are done, on this endpoint: `https://hooks.slack.com/services/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` ([docs](https://api.slack.com/incoming-webhooks)).
+We don't specify a timeframe for the assignment. Just ping us when you are done, on this endpoint: `https://hooks.slack.com/services/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` ([docs](https://api.slack.com/incoming-webhooks)).
