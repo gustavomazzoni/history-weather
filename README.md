@@ -17,7 +17,7 @@ A single page application was built using [React](https://facebook.github.io/rea
 ### Node RESTful API
 * Handles the communication with Forecast API through a lib class created named ForecastAPI.
 * Deals with any error Forecast API can return.
-* Caches Forecast API JSON response object for 6 hours with [Redis](http://redis.io/). This have minimized the external API calls a lot and reduced the response process time. And off course would reduce the API cost if more than 1000 request per day.
+* Caches Forecast API JSON response object for 6 hours with [Redis](http://redis.io/). This have minimized a lot the external API calls and reduced the response process time. And off course it would reduce the API cost if more than 1000 requests per day.
 * The router name was defined to expose an URL that indicates it's an API and it's versioned. And it's similar to Forecast API URL so it's easy to understand.
 
 ### React webapp
