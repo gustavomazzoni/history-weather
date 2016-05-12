@@ -19902,16 +19902,6 @@
 				time: nextProps.time
 			};
 
-			// [{
-			// 	"time":1367722800,
-			// 	"summary":"Partly cloudy starting in the afternoon, continuing until evening.",
-			// 	"icon":"partly-cloudy-night","sunriseTime":1367745203,"sunsetTime":1367785588,
-			// 	"moonPhase":0.86,"precipType":"rain","temperatureMin":67.16,"temperatureMinTime":1367737200,
-			// 	"temperatureMax":85.92,"temperatureMaxTime":1367769600,"apparentTemperatureMin":67.16,
-			// 	"apparentTemperatureMinTime":1367737200,"apparentTemperatureMax":87.3,"apparentTemperatureMaxTime":1367769600,
-			// 	"dewPoint":64.74,"humidity":0.72,"windSpeed":0.58,"windBearing":337,"visibility":5.55,"cloudCover":0.15
-			// }]
-
 			// get the weather
 			WeatherAPI.getWeather(query, function (result) {
 				var weather = {
@@ -20006,7 +19996,7 @@
 									'h4',
 									{ className: 'heading' },
 									weather.daily.temperatureMin,
-									'˚ /  ',
+									'˚ / ',
 									weather.daily.temperatureMax,
 									'˚'
 								),
