@@ -9,25 +9,23 @@ var Weather = React.createClass({
 		};
 	},
 
-	// Load weather from server
 	componentDidMount: function() {
+		// Only componentDidMount is called when the component is first added to
+		// the page. This is why we are calling the following method manually. 
+		// This makes sure that our map initialization code is run the first time.
+		this.componentWillReceiveProps(this.props);
+	},
+
+	// Load weather from server
+	componentWillReceiveProps: function(nextProps) {
+		console.log("componentWillReceiveProps");
 		var self = this;
 		// query param to request
 		var query = {
-			latitude: this.props.latitude,
-			longitude: this.props.longitude,
-			time: this.props.time
+			latitude: nextProps.latitude,
+			longitude: nextProps.longitude,
+			time: nextProps.time
 		}
-
-		// [{
-		// 	"time":1367722800,
-		// 	"summary":"Partly cloudy starting in the afternoon, continuing until evening.",
-		// 	"icon":"partly-cloudy-night","sunriseTime":1367745203,"sunsetTime":1367785588,
-		// 	"moonPhase":0.86,"precipType":"rain","temperatureMin":67.16,"temperatureMinTime":1367737200,
-		// 	"temperatureMax":85.92,"temperatureMaxTime":1367769600,"apparentTemperatureMin":67.16,
-		// 	"apparentTemperatureMinTime":1367737200,"apparentTemperatureMax":87.3,"apparentTemperatureMaxTime":1367769600,
-		// 	"dewPoint":64.74,"humidity":0.72,"windSpeed":0.58,"windBearing":337,"visibility":5.55,"cloudCover":0.15
-		// }]
 
 		// get the weather
 		WeatherAPI.getWeather(query, function(result) {
@@ -41,6 +39,7 @@ var Weather = React.createClass({
 			self.setState({
 				weather: weather
 			});
+			return true;
 		}, function(err) {
 			console.log(err);
 		});
@@ -111,7 +110,7 @@ var Weather = React.createClass({
 	                    <div className="panel-heading">
 	                    	<span className="icon" data-icon={weather.daily.icon}/>
 	                    	<div className="header text-left">
-							    <h4 className="heading">{weather.daily.temperatureMin}˚</h4>
+							    <h4 className="heading">{weather.daily.temperatureMin}˚ / {weather.daily.temperatureMax}˚</h4>
 							    <p>{weather.daily.summary}</p>
 							</div>
 	                    </div>

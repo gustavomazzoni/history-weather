@@ -1,5 +1,6 @@
 var React = require('react');
 var WeatherList = require('./WeatherList');
+var Search = require('./Search');
 
 var App = React.createClass({
 
@@ -57,13 +58,15 @@ var App = React.createClass({
 		return Number(f);
 	},
 
-	onSearch: function() {
+	// Get latitude, longitude and name from Google Place
+	getGMapsPlace: function(place) {
 		// get latitude and longitude from the search
-		// this.state.location;
-
-		// add each day of the last 30 days to the list
-		// together with latitude and longitude 
-		// this.state.weatherList.push();
+		var location = {
+			latitude: place.geometry.location.lat(),
+			longitude: place.geometry.location.lng(),
+			name: place.name
+		}
+		this.setState({location: location});
 	},
 
 	// Get last 30 days and the user current location
@@ -78,7 +81,7 @@ var App = React.createClass({
 			var location = {
 				latitude: self.replaceCommaToDot(position.coords.latitude),
 				longitude: self.replaceCommaToDot(position.coords.longitude),
-				city: "Current Location"
+				name: "Current Location"
 			}
 
 			self.setState({location: location});
@@ -106,9 +109,10 @@ var App = React.createClass({
 		return (
 			<div>
 				<header className="main-header">
-			        <div className="container">
+			        <div className="container text-center">
 			            <h1>History Weather</h1>
 			            <p>See how was the weather in the past 30 days.</p>
+			            <Search location={this.state.location} onSearch={this.getGMapsPlace} />
 			        </div>
 			    </header>
 

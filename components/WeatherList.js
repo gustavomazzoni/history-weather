@@ -16,7 +16,7 @@ var WeatherList = React.createClass({
 				<div className="container">
 					<div className="row">
 						<div>
-							<h2 className="page-header">{this.props.location.city}</h2>
+							<h2 className="page-header">{this.props.location.name}</h2>
 						</div>
 						{weathers}
 					</div>

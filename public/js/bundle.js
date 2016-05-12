@@ -19675,6 +19675,7 @@
 
 	var React = __webpack_require__(2);
 	var WeatherList = __webpack_require__(161);
+	var Search = __webpack_require__(197);
 
 	var App = React.createClass({
 		displayName: 'App',
@@ -19682,6 +19683,7 @@
 
 		getInitialState: function getInitialState() {
 			return {
+				errorMessage: null,
 				location: null,
 				lastDays: []
 			};
@@ -19691,7 +19693,7 @@
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 			} else {
-				errorCallback("Geolocation is not supported by this browser.");
+				errorCallback(new Error("Geolocation is not supported by this browser."));
 			}
 		},
 
@@ -19713,13 +19715,11 @@
 		getDateBefore: function getDateBefore(date) {
 			var onlyDate = new Date().toLocaleDateString();
 			var d = new Date(onlyDate);
-			// d.setDate(date.getDate()-1);
 
 			// Subtract 1 day from the date
 			date -= 1000 * 60 * 60 * 24 * 1;
 			// create a new Date object, using the adjusted time
 			d = new Date(date);
-			console.log(d);
 			return d;
 		},
 
@@ -19735,13 +19735,15 @@
 			return Number(f);
 		},
 
-		onSearch: function onSearch() {
+		// Get latitude, longitude and name from Google Place
+		getGMapsPlace: function getGMapsPlace(place) {
 			// get latitude and longitude from the search
-			// this.state.location;
-
-			// add each day of the last 30 days to the list
-			// together with latitude and longitude
-			// this.state.weatherList.push();
+			var location = {
+				latitude: place.geometry.location.lat(),
+				longitude: place.geometry.location.lng(),
+				name: place.name
+			};
+			this.setState({ location: location });
 		},
 
 		// Get last 30 days and the user current location
@@ -19756,12 +19758,13 @@
 				var location = {
 					latitude: self.replaceCommaToDot(position.coords.latitude),
 					longitude: self.replaceCommaToDot(position.coords.longitude),
-					city: "Current Location"
+					name: "Current Location"
 				};
 
 				self.setState({ location: location });
 			}, function (error) {
 				console.log(error);
+				self.setState({ errorMessage: error.message });
 			});
 		},
 
@@ -19776,6 +19779,12 @@
 			// Show WeatherList component only when location is available
 			if (this.state.location) {
 				weatherList = React.createElement(WeatherList, { lastDays: this.state.lastDays, location: this.state.location });
+			} else if (this.state.errorMessage) {
+				weatherList = React.createElement(
+					'h2',
+					null,
+					this.state.errorMessage
+				);
 			}
 
 			return React.createElement(
@@ -19786,7 +19795,7 @@
 					{ className: 'main-header' },
 					React.createElement(
 						'div',
-						{ className: 'container' },
+						{ className: 'container text-center' },
 						React.createElement(
 							'h1',
 							null,
@@ -19796,7 +19805,8 @@
 							'p',
 							null,
 							'See how was the weather in the past 30 days.'
-						)
+						),
+						React.createElement(Search, { location: this.state.location, onSearch: this.getGMapsPlace })
 					)
 				),
 				weatherList
@@ -19842,7 +19852,7 @@
 							React.createElement(
 								'h2',
 								{ className: 'page-header' },
-								this.props.location.city
+								this.props.location.name
 							)
 						),
 						weathers
@@ -19874,14 +19884,22 @@
 			};
 		},
 
-		// Load weather from server
 		componentDidMount: function componentDidMount() {
+			// Only componentDidMount is called when the component is first added to
+			// the page. This is why we are calling the following method manually.
+			// This makes sure that our map initialization code is run the first time.
+			this.componentWillReceiveProps(this.props);
+		},
+
+		// Load weather from server
+		componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+			console.log("componentWillReceiveProps");
 			var self = this;
 			// query param to request
 			var query = {
-				latitude: this.props.latitude,
-				longitude: this.props.longitude,
-				time: this.props.time
+				latitude: nextProps.latitude,
+				longitude: nextProps.longitude,
+				time: nextProps.time
 			};
 
 			// [{
@@ -19906,6 +19924,7 @@
 				self.setState({
 					weather: weather
 				});
+				return true;
 			}, function (err) {
 				console.log(err);
 			});
@@ -19987,6 +20006,8 @@
 									'h4',
 									{ className: 'heading' },
 									weather.daily.temperatureMin,
+									'˚ /  ',
+									weather.daily.temperatureMax,
 									'˚'
 								),
 								React.createElement(
@@ -27152,6 +27173,102 @@
 	         encodeURIComponent(stringifyPrimitive(obj));
 	};
 
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var GMapsHelper = __webpack_require__(198);
+
+	var Search = React.createClass({
+		displayName: 'Search',
+
+
+		getInitialState: function getInitialState() {
+			var value = "Current Location";
+			return {
+				value: value
+			};
+		},
+
+		// Load GMaps autocomplete input
+		componentDidMount: function componentDidMount() {
+			// Call Google Maps Place API
+			// to get geolocation from search
+			GMapsHelper.initAutocomplete(this.props.onSearch, function (error) {
+				console.log(error);
+			});
+		},
+
+		// Load weather from server
+		componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+			if (nextProps.location) {
+				this.setState({ value: nextProps.location.name });
+			}
+		},
+
+		handleChange: function handleChange() {
+			this.setState({ value: event.target.value });
+		},
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'form-group' },
+				React.createElement(
+					'div',
+					{ className: 'col-xs-12 col-md-6 col-md-offset-3' },
+					React.createElement(
+						'div',
+						{ className: 'input-group' },
+						React.createElement('input', { type: 'text', className: 'address form-control', id: 'gmaps_autocomplete', placeholder: 'Enter the location...',
+							value: this.state.value, onChange: this.handleChange }),
+						React.createElement(
+							'span',
+							{ className: 'input-group-btn' },
+							React.createElement('span', { className: 'glyphicon glyphicon-search', 'aria-hidden': 'true' })
+						)
+					)
+				)
+			);
+		}
+	});
+
+	module.exports = Search;
+
+/***/ },
+/* 198 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	// This example displays an address form, using the autocomplete feature
+	// of the Google Places API to help users fill in the information.
+
+	var autocomplete;
+
+	module.exports = {
+	  initAutocomplete: function initAutocomplete(successCallback, errorCallback) {
+	    // Create the autocomplete object, restricting the search to geographical
+	    // location types.
+	    autocomplete = new google.maps.places.Autocomplete(
+	    /** @type {!HTMLInputElement} */document.getElementById('gmaps_autocomplete'), { types: ['geocode'] });
+
+	    // When the user selects an address from the dropdown,
+	    // call the callback function with the place
+	    autocomplete.addListener('place_changed', function () {
+	      var place = autocomplete.getPlace();
+	      if (!place.geometry) {
+	        errorCallback("GMaps Autocomplete's returned place contains no geometry");
+	      } else {
+	        successCallback(place);
+	      }
+	    });
+	  }
+	};
 
 /***/ }
 /******/ ]);

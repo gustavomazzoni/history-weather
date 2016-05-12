@@ -39,6 +39,38 @@
     line-height: 1;
 }
 
+/* Search */
+.input-group {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 5px;
+    border: #000 1px solid;
+}
+.address {
+    font-size: 20px;
+    font-weight: 500;
+    border: #fff 0px solid;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+}
+input[type="text"]:focus {
+  outline: none;
+}
+.glyphicon-search {
+    position: relative;
+    right: 10px;
+}
+.glyphicon {
+    font-size: 20px;
+    z-index: 20;
+    cursor: pointer;
+    color: #000;
+}
+/* End Search */
+
 section {
 	padding: 50px 0 50px 0;
 }
@@ -61,7 +93,7 @@ section {
 }
 
 #history-weather .panel-heading {
-	min-height: 100px;
+	min-height: 115px;
 }
 
 #history-weather .panel-heading span {
@@ -77,8 +109,9 @@ section {
     vertical-align: middle;
 }
 
-#history-weather .header .heading {
-    margin-top: 0;
+#history-weather .header h4 {
+    display: inline-block;
+    margin-top: 10px;
     margin-bottom: 5px;
 }
 
