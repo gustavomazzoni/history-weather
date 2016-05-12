@@ -12,7 +12,7 @@ We don't specify a timeframe for the assignment. Just ping us when you are done,
 
 ---------------
 ## Solution
-It was built a single page application using [React](https://facebook.github.io/react/), for the client side, consuming a RESTful API developed in [Node](https://nodejs.org/) that makes the integration to the external forecast.io API to retrieve forecast information.
+A single page application was built using [React](https://facebook.github.io/react/), for the client side, consuming a RESTful API developed in [Node](https://nodejs.org/) that makes the integration to the external forecast.io API to retrieve forecast information.
 
 ### Node RESTful API
 * Handles the communication with Forecast API through a lib class created named ForecastAPI.
