@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "webpack --progress --colors",
+    "test": "mocha tests --recursive",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -16,5 +17,9 @@
     "react-dom": "^0.14.7",
     "redis": "^2.6.0-2",
     "webpack": "^1.12.14"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
   }
 }

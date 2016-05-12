@@ -111,7 +111,7 @@ var Weather = React.createClass({
 	                    <div className="panel-heading">
 	                    	<span className="icon" data-icon={weather.daily.icon}/>
 	                    	<div className="header text-left">
-							    <h4 className="heading">{weather.daily.temperatureMin}</h4>
+							    <h4 className="heading">{weather.daily.temperatureMin}˚</h4>
 							    <p>{weather.daily.summary}</p>
 							</div>
 	                    </div>

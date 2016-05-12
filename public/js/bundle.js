@@ -19700,7 +19700,7 @@
 			var d = new Date(date.getTime());
 
 			while (numberOfDays > 0) {
-				d = this.getYesterday(d);
+				d = this.getDateBefore(d);
 				var timeInSeconds = this.convertTimeToSeconds(d.getTime());
 				// add the date as time in seconds to the list of last days
 				lastDays.push(timeInSeconds);
@@ -19710,10 +19710,16 @@
 		},
 
 		// Get the date before the one passed as argument
-		getYesterday: function getYesterday(date) {
+		getDateBefore: function getDateBefore(date) {
 			var onlyDate = new Date().toLocaleDateString();
 			var d = new Date(onlyDate);
-			d.setDate(date.getDate() - 1);
+			// d.setDate(date.getDate()-1);
+
+			// Subtract 1 day from the date
+			date -= 1000 * 60 * 60 * 24 * 1;
+			// create a new Date object, using the adjusted time
+			d = new Date(date);
+			console.log(d);
 			return d;
 		},
 
@@ -19749,7 +19755,8 @@
 			this.getCurrentLocation(function (position) {
 				var location = {
 					latitude: self.replaceCommaToDot(position.coords.latitude),
-					longitude: self.replaceCommaToDot(position.coords.longitude)
+					longitude: self.replaceCommaToDot(position.coords.longitude),
+					city: "Current Location"
 				};
 
 				self.setState({ location: location });
@@ -19979,7 +19986,8 @@
 								React.createElement(
 									'h4',
 									{ className: 'heading' },
-									weather.daily.temperatureMin
+									weather.daily.temperatureMin,
+									'˚'
 								),
 								React.createElement(
 									'p',

@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 module.exports = {  
     entry: [
-      "./webapp/main.js"
+      "./app.js"
     ],
     output: {
         path: path.resolve(__dirname, "public/js"),
