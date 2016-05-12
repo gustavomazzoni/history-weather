@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ForecastAPI = require('../helpers/ForecastAPI');
+var ForecastAPI = require('../libs/ForecastAPI');
 
 /*  "/api/v1/weather/:latitude,:longitude,:time"
  *    GET: 

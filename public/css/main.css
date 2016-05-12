@@ -1,8 +1,117 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+/* ==========================================================================
+   Custom styles
+   ========================================================================== */
+/* For the fonts to work
+ * http://www.alessioatzeni.com/meteocons/ */
+.icon:before {
+    font-family: 'MeteoconsRegular';
+    content: attr(data-icon);
+}
+.icon {
+    font-size: -webkit-xxx-large;
 }
 
-a {
-  color: #00B7FF;
+.navbar-fixed-top {
+   background-color: #fff;
+   border-bottom: 1px solid #d9d9d9; 
+}
+
+.navbar-brand {
+    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+}
+
+.main-header {
+    position: relative;
+    padding-top: 90px;
+    padding-bottom: 60px;
+    text-align: left;
+    font-size: 24px;
+    color: #fff;
+    background: rgba(51,150,222,1);
+    margin-bottom: -40px;
+}
+
+.main-header h1 {
+    font-size: 60px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+section {
+	padding: 50px 0 50px 0;
+}
+
+.no-header {
+    padding-top: 100px;
+}
+
+.separator {
+    line-height: 0.5;
+    text-align: center;
+    margin: 30px 0 30px 0;
+}
+
+.spacer-single {
+    width: 100%;
+    height: 30px;
+    display: block;
+    clear: both;
+}
+
+#history-weather .panel-heading {
+	min-height: 100px;
+}
+
+#history-weather .panel-heading span {
+	float: left;
+}
+
+#history-weather .header {
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 14px;
+    display: inline-block;
+    width: 73%;
+    vertical-align: middle;
+}
+
+#history-weather .header .heading {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+#history-weather .panel-body .date {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+    color: #337ab7;
+}
+
+#history-weather .status {
+	padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    display: flex;
+}
+
+#history-weather .status div {
+    float: left;
+    width: 25%;
+    font-size: 11px;
+    text-transform: capitalize;
+}
+
+#history-weather .status div strong {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1;
+    display: block !important;
+}
+
+
+@media (min-width: 768px) {
+    .main-header {
+        
+    }
 }

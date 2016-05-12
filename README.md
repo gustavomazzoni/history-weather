@@ -41,7 +41,7 @@ $ redis-server
 ```
 Then build and start the project
 ```sh
-$ npm build
+$ npm run build
 $ npm start
 ```
 
@@ -50,7 +50,7 @@ http://localhost:3000/
 
 ### Test the API
 #### The Time Machine Call
-It is also possible to request a forecast for an arbitrary date in the past or future:
+It is possible to request a forecast for an arbitrary date in the past or future:
 ```sh
 http://localhost:3000/api/v1/weather/LATITUDE,LONGITUDE,TIME
 ```

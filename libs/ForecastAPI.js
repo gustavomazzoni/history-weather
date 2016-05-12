@@ -12,9 +12,25 @@ client.on('error', function (err) {
 
 
 var ForecastAPI = (function() {
-    "use strict";
-
     var fabric = {};
+
+    // check if params are valid
+    function isValid(options) {
+        if (!(options.latitude && options.longitude &&
+            isNumeric(options.latitude) && isNumeric(options.longitude))) {
+            return false;
+        }
+        return true;
+    }
+    
+    function isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    // round to 2 decimal places
+    function roundDecimal(f) {
+        return Math.round(f * 100) / 100
+    }
 
     // The Dark Sky Forecast API url
     // https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE,TIME
@@ -23,7 +39,7 @@ var ForecastAPI = (function() {
     // public function to make Forecast API call
     fabric.forecast = function(query, successCallback, errorCallback) {
         // check if params are valid
-        if (!(query.latitude && query.longitude && isNumeric(query.latitude) && isNumeric(query.longitude))) {
+        if (!isValid(query)) {
             var err = new Error("Must inform valid latitude and longitude.");
             err.status = 400;
 
@@ -33,8 +49,8 @@ var ForecastAPI = (function() {
         }
 
         // set URL Params: LATITUDE,LONGITUDE,TIME
-        var urlParams = query.latitude;
-        urlParams += "," + query.longitude;
+        var urlParams = roundDecimal(query.latitude);
+        urlParams += "," + roundDecimal(query.longitude);
         if (query.time) urlParams += "," + query.time;
 
         // use the redis client to get the forecast info associated 
@@ -62,8 +78,16 @@ var ForecastAPI = (function() {
                     }); 
 
                     // finished transferring data
-                    response.on("end", function (err) {
-                        console.log("onEnd");
+                    response.on("end", function () {
+                        // if response status is not 200, something went wrong.
+                        if (response.statusCode !== 200) {
+                            var err = new Error('Problem with the result. Problably an error in the url params: '+urlParams);
+                            err.status = 400;
+                            
+                            // call error callback function
+                            errorCallback(err);
+                            return;
+                        }
 
                         // dump the raw data
                         try {
@@ -77,7 +101,6 @@ var ForecastAPI = (function() {
                             successCallback(result);
                         } catch(err) {
                             // catch any error with JSON parsing the result
-                            console.log(err);
                             console.log('Problem with result. Problably an error in the params: '+urlParams);
                             
                             err = new Error('Problem with the result. Problably an error in the url params: '+urlParams);
@@ -96,10 +119,6 @@ var ForecastAPI = (function() {
                 });
             }
         });
-    }
-
-    function isNumeric(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
     return fabric;
