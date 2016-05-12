@@ -11,6 +11,34 @@ We don't specify a timeframe for the assignment. Just ping us when you are done,
 
 
 ---------------
+## Solution
+It was built a single page application using [React](https://facebook.github.io/react/), for the client side, consuming a RESTful API developed in [Node](https://nodejs.org/) that makes the integration to the external forecast.io API to retrieve forecast information.
+
+### Node RESTful API
+* Handles the communication with Forecast API through a lib class created named ForecastAPI.
+* Deals with any error Forecast API can return.
+* Caches Forecast API JSON response object for 6 hours with [Redis](http://redis.io/). This have minimized the external API calls a lot and reduced the response process time. And off course would reduce the API cost.
+* The router name was defined to expose an URL that indicates it's an API and it's versioned. And it's similar to Forecast API URL so it's easy to understand.
+
+### React webapp
+* Modularized the components in the view making them reusable and self-managed.
+* Each component makes their own API request simultaneously with each other.
+
+
+Modules required in client side:
+* React
+* React-DOM
+* Babel
+* Webpack
+
+Modules required in server side:
+* NodeJS
+* ExpressJS
+* Redis
+
+Modules required for testing:
+* Mocha
+* Chai
 
 ## Running the app
 ### Download the project
