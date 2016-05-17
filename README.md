@@ -1,4 +1,4 @@
-# AppStore Top Rank API
+# History Weather
 ## Goal
 
 Create an application to collect the last 30 days of weather data from forecast.io API for a given location.
