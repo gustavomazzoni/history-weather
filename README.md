@@ -1,16 +1,15 @@
-# Assignment
+# AppStore Top Rank API
+## Goal
 
-Make a system in PHP to collect the last 30 days of weather data from forecast.io API for a given location. We expect you to do multiple API requests simultaneously.
+Create an application to collect the last 30 days of weather data from forecast.io API for a given location.
 
-You can find the API documentation here: https://developer.forecast.io/docs/v2.  
+API documentation here: https://developer.forecast.io/docs/v2.  
 Apply for a API key here: https://developer.forecast.io/register
 
-# Timing
+## Guidelines
+* Make multiple API requests simultaneously.
+* Optimize API response time.
 
-We don't specify a timeframe for the assignment. Just ping us when you are done, on this endpoint: `https://hooks.slack.com/services/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` ([docs](https://api.slack.com/incoming-webhooks)). Please mention your name and a link to what we need to review.
-
-
----------------
 ## Solution
 A single page application was built using [React](https://facebook.github.io/react/), for the client side, consuming a RESTful API developed in [Node](https://nodejs.org/) that makes the integration to the external forecast.io API to retrieve forecast information.
 
@@ -23,7 +22,6 @@ A single page application was built using [React](https://facebook.github.io/rea
 ### React webapp
 * Modularized the components in the view making them reusable and self-managed.
 * Each component makes their own API request simultaneously with each other.
-
 
 Modules required in client side:
 * React
