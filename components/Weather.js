@@ -1,5 +1,5 @@
 var React = require('react');
-var WeatherAPI = require('../services/WeatherAPI');
+var WeatherService = require('../services/WeatherService');
 
 var Weather = React.createClass({
 
@@ -16,9 +16,11 @@ var Weather = React.createClass({
 		this.componentWillReceiveProps(this.props);
 	},
 
-	// Load weather from server
+	// Load weather from server.
+	// componentWillReceiveProps is invoked when a component is receiving new props. 
+	// This method is not called for the initial render.
+	// This as an opportunity to react to a prop transition before render() is called by updating the state using this.setState().
 	componentWillReceiveProps: function(nextProps) {
-		console.log("componentWillReceiveProps");
 		var self = this;
 		// query param to request
 		var query = {
@@ -28,7 +30,7 @@ var Weather = React.createClass({
 		}
 
 		// get the weather
-		WeatherAPI.getWeather(query, function(result) {
+		WeatherService.getWeather(query, function(result) {
 			var weather = {
 				latitude: result.latitude,
 				longitude: result.longitude,
@@ -36,6 +38,7 @@ var Weather = React.createClass({
 			}
 			weather.daily.icon = self.parseWeatherIcon(weather.daily.icon);
 			weather.daily.date = self.convertTimeInSecondsToDate(weather.daily.time);
+			// Update the state
 			self.setState({
 				weather: weather
 			});

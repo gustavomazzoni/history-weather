@@ -49,6 +49,9 @@ var ForecastAPI = (function() {
         }
 
         // set URL Params: LATITUDE,LONGITUDE,TIME
+        // round latitude and longitude to 2 decimal places
+        // so it would be possible to store same weather object
+        // with a unique key
         var urlParams = roundDecimal(query.latitude);
         urlParams += "," + roundDecimal(query.longitude);
         if (query.time) urlParams += "," + query.time;

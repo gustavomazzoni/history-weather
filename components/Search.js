@@ -22,7 +22,7 @@ var Search = React.createClass({
 		);
 	},
 
-	// Load weather from server
+	// Update the value of input text
 	componentWillReceiveProps: function(nextProps) {
 		if (nextProps.location) {
 			this.setState({value: nextProps.location.name});
@@ -47,7 +47,6 @@ var Search = React.createClass({
 				</div>
 			</div>
 		);
-
 	}
 });
 

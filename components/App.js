@@ -24,6 +24,7 @@ var App = React.createClass({
 		var lastDays = [];
 		var d = new Date(date.getTime());
 
+		// while number of days higher than zero keeps adding last dates do the list
 		while (numberOfDays > 0) {
 			d = this.getDateBefore(d);
 			var timeInSeconds = this.convertTimeToSeconds(d.getTime());
@@ -36,7 +37,10 @@ var App = React.createClass({
 
 	// Get the date before the one passed as argument
 	getDateBefore: function(date) {
+		// get Date string without hour/min/sec
+		// This way is possible to find cached object in the server
 		var onlyDate = new Date().toLocaleDateString();
+		// create new Date with the string
 		var d = new Date(onlyDate);
  		
  		// Subtract 1 day from the date
@@ -74,6 +78,7 @@ var App = React.createClass({
 		var onlyDate = new Date().toLocaleDateString();
 		var currentDate = new Date(onlyDate);
 		var lastDays = this.getLastDays(currentDate, 30);
+		// Update the component's state
 		this.setState({lastDays: lastDays});
 
 		var self = this;
@@ -84,6 +89,7 @@ var App = React.createClass({
 				name: "Current Location"
 			}
 
+			// Update the component's state
 			self.setState({location: location});
 		}, function(error) {
 			console.log(error);
