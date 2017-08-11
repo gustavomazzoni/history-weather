@@ -42,7 +42,7 @@ Modules required for testing:
 ### Download the project
 Download or clone the project using following command:
 ```sh
-$ git clone git@github.com:madewithlove/technical-assignment-using-forecast-io-gustavomazzoni.git
+$ git clone git@github.com/gustavomazzoni/history-weather.git
 ```
 ### Install
 Install Redis
